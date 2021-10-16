@@ -1,17 +1,19 @@
 require('dotenv').config();
 const express = require('express');
-const db = require('./database');
+
+const fetchRemoteJobs = require('./scheduler');
+const apiRoutes = require('./routes/api.js');
 
 const app = express();
-// TEST DB
-db.select('*')
-  .from('users')
-  .then((data) => console.log(data))
-  .catch((err) => console.log(err));
 
-app.use('/', (req, res) => {
-  res.send('holaaaaa');
-});
+require('./db');
+
+fetchRemoteJobs.start();
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+app.use('/api', apiRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`app running on http://localhost:${process.env.PORT}`);
