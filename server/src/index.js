@@ -8,7 +8,7 @@ const app = express();
 
 require('./db');
 
-fetchRemoteJobs.start();
+// fetchRemoteJobs.start();
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

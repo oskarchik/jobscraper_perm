@@ -3,6 +3,7 @@ const { Op } = require('sequelize');
 const { v4: uuidv4, v4 } = require('uuid');
 
 const { Job } = require('../../db');
+const { authenticateToken } = require('../../middlewares/auth.middleware');
 
 router.get('/latestsjobs', async (req, res, next) => {
   const jobs = await Job.findAll({
@@ -13,7 +14,8 @@ router.get('/latestsjobs', async (req, res, next) => {
   });
   res.json(jobs);
 });
-router.get('/alljobs', async (req, res, next) => {
+router.get('/alljobs', authenticateToken, async (req, res, next) => {
+  // console.log('req.user', req.user);
   const jobs = await Job.findAll();
   res.json(jobs);
 });
