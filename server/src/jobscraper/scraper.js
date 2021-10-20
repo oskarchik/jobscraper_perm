@@ -1,23 +1,7 @@
 const puppeteer = require('puppeteer');
+const { techFilter } = require('../utils/techFilter');
 
 const jobs = [];
-const techFilter = [
-  'react',
-  'redux',
-  'angular',
-  'node.js',
-  'express.js',
-  'git',
-  'sql',
-  'mysql',
-  'postgresql',
-  'nosql',
-  'mongodb',
-  'docker',
-  'rest',
-  'api',
-  'bootstrap',
-];
 
 const jobScraper = async () => {
   const browser = await puppeteer.launch({ headless: true });
@@ -28,13 +12,10 @@ const jobScraper = async () => {
 
   await latestJobs(page);
 
-  // console.log(jobs.length);
-
   await page.close();
 };
 
 const getJobs = () => {
-  // console.log(jobs);
   return jobs;
 };
 
