@@ -7,6 +7,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: HOST,
   dialect: DIALECT,
   logging: false,
+  query: { raw: true },
 });
 
 const User = UserModel(sequelize, Sequelize);

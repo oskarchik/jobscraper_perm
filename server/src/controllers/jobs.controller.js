@@ -1,8 +1,6 @@
-const router = require('express').Router();
 const { Op } = require('sequelize');
 const { v4: uuidv4, v4 } = require('uuid');
 const { Job } = require('../db');
-const { authenticateToken } = require('../middlewares/auth.middleware');
 
 const latestJobs = async (req, res, next) => {
   const jobs = await Job.findAll({
@@ -13,14 +11,16 @@ const latestJobs = async (req, res, next) => {
       },
     },
   });
-  console.log('latestjobs', jobs.length);
-  res.json(jobs);
+
+  if (jobs.length) {
+    return res.json(jobs);
+  } else {
+    return res.send({ msg: 'no new jobs' });
+  }
 };
 
 const allJobs = async (req, res, next) => {
-  // console.log('req.user', req.user);
   const jobs = await Job.findAll();
-  console.log('alljobs', jobs.length);
   res.json(jobs);
 };
 
@@ -33,7 +33,6 @@ const addJobs = async (req, res, next) => {
 
 const updateJob = async (req, res, next) => {
   const { applied } = req.body;
-  console.log(applied);
   try {
     await Job.update(
       { applied },
