@@ -6,10 +6,14 @@ const { jobScraper, getJobs } = require('../jobscraper/scraper');
 
 console.log('starting');
 async function fetchJobs() {
-  console.log('fetching jobs');
-  await jobScraper();
-  const newJobs = getJobs();
-  saveJobs(newJobs);
+  try {
+    console.log('fetching jobs');
+    await jobScraper();
+    const newJobs = getJobs();
+    saveJobs(newJobs);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 const saveJobs = async (jobs) => {

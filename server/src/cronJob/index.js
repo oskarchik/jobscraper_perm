@@ -7,11 +7,12 @@ const remoteJobsCron = async () => {
   sendMailCron.start();
 };
 
-const fetchCron = new CronJob('* *  * * *', async () => {
+const fetchCron = new CronJob('0 10,17 * * *', async () => {
   await fetchJobs();
 });
 
-const sendMailCron = new CronJob('* * * * *', async () => {
+const sendMailCron = new CronJob('10 17 * * *', async () => {
+  console.log('sending email');
   await latestJobs(process.env.MOCK_EMAIL, process.env.MOCK_PASSWORD);
 });
 module.exports = { remoteJobsCron };
