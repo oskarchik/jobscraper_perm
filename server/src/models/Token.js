@@ -1,8 +1,8 @@
 module.exports = (sequelize, type) => {
-  return sequelize.define(
+  const Token = sequelize.define(
     'Token',
     {
-      id: {
+      t_id: {
         type: type.UUID,
         primaryKey: true,
         notNullable: true,
@@ -12,9 +12,18 @@ module.exports = (sequelize, type) => {
         notNullable: true,
         unique: true,
       },
+      user_id: {
+        type: type.UUID,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+      },
     },
     {
       underscored: true,
     }
   );
+
+  return Token;
 };
