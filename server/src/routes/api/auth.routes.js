@@ -5,8 +5,8 @@ router.post('/register', register);
 
 router.post('/login', logIn);
 
-router.post('/token', newAccessToken);
+router.get('/token', newAccessToken);
 
-router.delete('/logout', logOut);
+router.get('/logout', logOut);
 
 module.exports = router;
