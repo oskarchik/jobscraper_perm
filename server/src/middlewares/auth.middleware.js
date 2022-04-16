@@ -2,23 +2,35 @@ const jwt = require('jsonwebtoken');
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
 
-  const token = authHeader && authHeader.split(' ')[1];
+  if (!authHeader) return res.status(401).json({ msg: 'unauthorized access' });
 
-  if (token === null) return res.status(401).json({ msg: 'unauthorized access' });
+  const token = authHeader.split(' ')[1];
+
+  if (!token) return res.status(401).json({ msg: 'unauthorized access' });
 
   jwt.verify(token, process.env.TOKEN_KEY, (err, payload) => {
     if (err) return res.status(403).json({ msg: 'forbidden access' });
-    req.user = payload;
+    req.user = payload.email;
     next();
   });
 };
 
-const generateAccessToken = (user) => {
+const generateAccessToken = (email) => {
   try {
-    const token = jwt.sign(user, process.env.TOKEN_KEY, { expiresIn: '10m' });
+    const token = jwt.sign({ email }, process.env.TOKEN_KEY, { expiresIn: '10m' }); // 5 to 15 minutes in production
+
     return token;
   } catch (error) {
     console.log('error', error);
   }
 };
-module.exports = { authenticateToken, generateAccessToken };
+const generateRefreshToken = (email) => {
+  try {
+    const token = jwt.sign({ email }, process.env.REFRESH_TOKEN_KEY, { expiresIn: 24 * 60 * 60 * 1000 });
+
+    return token;
+  } catch (error) {
+    console.log('error', error);
+  }
+};
+module.exports = { authenticateToken, generateAccessToken, generateRefreshToken };
