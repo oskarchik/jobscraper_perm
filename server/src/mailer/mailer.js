@@ -2,33 +2,37 @@ const axios = require('axios').default;
 const { techFilter } = require('../utils/techFilter');
 const { sendMail } = require('./nodemailer');
 
+const BASE_URL_LOGIN =
+  process.env.NODE_ENV === 'production' ? '/api/auth/login' : 'http://localhost:8000/api/auth/login';
+const BASE_URL_JOBS =
+  process.env.NODE_ENV === 'production' ? '/api/jobs/latestsjobs' : 'http://localhost:8000/api/jobs/latestsjobs';
+
 const latestJobs = async (email, password) => {
-  await axios
-    .post(
-      'http://localhost:8000/api/auth/login',
+  try {
+    const responseLogin = await axios.post(
+      BASE_URL,
       { email, password },
       {
         headers: {
           'Content-Type': 'application/json',
         },
       }
-    )
-    .then((res) => {
-      const token = res.data.accessToken;
-      return axios.get('http://localhost:8000/api/jobs/latestsjobs', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    })
-    .then(async (response) => {
-      return await response.data;
-    })
-    .then(async (jobs) => await displayTable(jobs))
-    .then((table) => sendMail(table))
-    .catch((err) => console.log(err));
+    );
+    const token = responseLogin.data.accessToken;
+
+    const responseLatestJobs = await axios.get(BASE_URL_JOBS, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+    console.log('responseLatestJobs', responseLatestJobs.data);
+
+    if (responseLatestJobs.data.msg) sendMail(responseLatestJobs.data.msg);
+  } catch (error) {
+    console.log(error);
+  }
 };
-// latestJobs(process.env.MOCK_EMAIL, process.env.MOCK_PASSWORD);
 
 const displayTable = async (jobs) => {
   let table = `<h1>These are the job collected today from your database!!!</h1>

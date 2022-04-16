@@ -1,9 +1,9 @@
 const nodemailer = require('nodemailer');
 
-async function sendMail(table) {
+async function sendMail(data) {
   let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 465,
+    service: 'gmail',
     secure: true,
     auth: {
       user: 'osc.dev.test@gmail.com',
@@ -17,13 +17,13 @@ async function sendMail(table) {
       to: 'osc.dev.test@gmail.com',
       subject: `Job offers fot today ${new Date().toLocaleDateString()}`,
       text: 'These are the job collected today from your database!!!',
-      html: table,
+      html: data,
     },
     function (err, info) {
       if (err) {
         console.log(err);
       } else {
-        console.log(info);
+        console.log('success', info);
       }
     }
   );
