@@ -9,8 +9,9 @@ async function fetchJobs() {
   try {
     console.log('fetching jobs');
     await jobScraper();
-    const newJobs = getJobs();
+    const newJobs = await getJobs();
     saveJobs(newJobs);
+    return newJobs;
   } catch (error) {
     console.log(error);
   }
