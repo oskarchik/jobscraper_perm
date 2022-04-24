@@ -109,19 +109,15 @@ export const JobsProvider = ({ children }) => {
   const [info, setInfo] = useState(null);
 
   const value = {
+    getJobs,
     jobOffers: state.jobs,
     information: state.info,
-    jobs: jobs,
-    setJobs: setJobs,
-    info: info,
-    setInfo,
-    getJobs,
-    state: state,
     getNewPage,
-    filterJob,
     updateJob,
     sortResultsByField,
     deleteJobs,
+    filterJob,
+    noJobsMsg: state.msg,
   };
 
   return <JobsContext.Provider value={value}>{children}</JobsContext.Provider>;

@@ -9,7 +9,7 @@ const jobReducer = (state, action) => {
 
   switch (type) {
     case 'GET_JOB':
-      return { ...state, info: payload.info, jobs: payload.results?.jobs?.rows };
+      return { ...state, info: payload.info, jobs: payload.results?.jobs?.rows, msg: payload.msg };
 
     case 'SEARCH_JOB':
       return { ...state, info: payload.info, jobs: payload.results.jobs.rows, msg: payload.msg };
