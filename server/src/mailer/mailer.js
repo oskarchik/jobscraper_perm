@@ -10,7 +10,7 @@ const BASE_URL_JOBS =
 const latestJobs = async (email, password) => {
   try {
     const responseLogin = await axios.post(
-      BASE_URL,
+      BASE_URL_LOGIN,
       { email, password },
       {
         headers: {
@@ -26,7 +26,6 @@ const latestJobs = async (email, password) => {
       },
       withCredentials: true,
     });
-    console.log('responseLatestJobs', responseLatestJobs.data);
 
     if (responseLatestJobs.data.msg) sendMail(responseLatestJobs.data.msg);
   } catch (error) {
