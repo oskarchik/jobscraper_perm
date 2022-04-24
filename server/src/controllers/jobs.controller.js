@@ -155,7 +155,6 @@ const searchJob = async (req, res, next) => {
     whereStatement[`${field}`] = trueBool;
   }
 
-  console.log('whereStatement', whereStatement);
   try {
     const jobs = await Job.findAndCountAll({
       where: {
@@ -165,8 +164,6 @@ const searchJob = async (req, res, next) => {
       limit: limit,
       offset: page * limit,
     });
-
-    console.log('jobs', jobs);
 
     const results = { info: { pages: Math.ceil(jobs.count / limit), currentPage: page + 1 } };
 

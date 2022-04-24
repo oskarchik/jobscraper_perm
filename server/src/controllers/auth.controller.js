@@ -32,7 +32,6 @@ const register = async (req, res) => {
 //===============LOGIN==============
 
 const logIn = async (req, res, next) => {
-  console.log('aqui');
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(422).json({ msg: 'all fields are required, please try again' });
@@ -97,6 +96,7 @@ const newAccessToken = async (req, res, next) => {
 
 const logOut = async (req, res, next) => {
   const token = req.cookies.token;
+
   if (!token) return res.status(204);
 
   const existingToken = await Token.findOne({
@@ -108,7 +108,6 @@ const logOut = async (req, res, next) => {
 
   if (!existingToken) return res.status(404).json({ msg: 'impossible to logout, please try again' });
 
-  console.log('exisiting Token', existingToken);
   try {
     await Token.destroy({
       where: {
