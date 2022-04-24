@@ -34,8 +34,17 @@ const techFilter = [
 const Table = () => {
   const [markedJobs, setMarkedJobs] = useState(JSON.parse(localStorage.getItem('markedJobs')));
   const [isSorted, setIsSorted] = useState(false);
-  const { info, getJobs, jobOffers, information, getNewPage, updateJob, sortResultsByField, deleteJobs, filterJob } =
-    useJobs();
+  const {
+    getJobs,
+    jobOffers,
+    information,
+    getNewPage,
+    updateJob,
+    sortResultsByField,
+    deleteJobs,
+    filterJob,
+    noJobsMsg,
+  } = useJobs();
 
   const location = useLocation();
   const url = location.pathname === '/alljobs' ? 'api/jobs/alljobs' : 'api/jobs/latestsjobs';
@@ -78,10 +87,10 @@ const Table = () => {
   }, [url]);
   return (
     <>
-      {info?.msg ? (
+      {noJobsMsg ? (
         <StyledTable>
           <div className='error-container'>
-            <h1 className='error'>{info?.msg}</h1>
+            <h1 className='error'>{noJobsMsg.toString()}</h1>
             <Link to='/alljobs' className='link'>
               check all jobs list
             </Link>
@@ -90,7 +99,7 @@ const Table = () => {
       ) : (
         <>
           <StyledTable>
-            <div>
+            <div className='buttons'>
               <Button onClick={filterAppliedJobs} text='APPLIED JOBS' />
               <Button onClick={() => getJobs(url, location)} text='REMOVE FILTER' />
             </div>
