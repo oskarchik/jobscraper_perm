@@ -8,7 +8,7 @@ const jobScraper = async () => {
 
   const page = await browser.newPage();
 
-  await page.goto('https://ticjob.es/esp/busqueda');
+  await page.goto('https://ticjob.es/esp/busqueda', { timeout: 0 });
 
   await latestJobs(page);
 
