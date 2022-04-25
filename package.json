@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "client:dev": "cd client/job-scraper-app && npm start",
+    "server:dev": "cd server && npm run dev"
+  }
+}

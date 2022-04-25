@@ -1,43 +1,27 @@
 const puppeteer = require('puppeteer');
+const { techFilter } = require('../utils/techFilter');
 
 const jobs = [];
-const techFilter = [
-  'react',
-  'redux',
-  'angular',
-  'node.js',
-  'express.js',
-  'git',
-  'sql',
-  'mysql',
-  'postgresql',
-  'nosql',
-  'mongodb',
-  'docker',
-  'rest',
-  'api',
-  'bootstrap',
-];
 
 const jobScraper = async () => {
   const browser = await puppeteer.launch({ headless: true });
 
   const page = await browser.newPage();
 
-  await page.goto('https://ticjob.es/esp/busqueda');
+  await page.goto('https://ticjob.es/esp/busqueda', { timeout: 0 });
 
   await latestJobs(page);
-
-  console.log(jobs.length);
 
   await page.close();
 };
 
-const getJobs = () => jobs;
+const getJobs = () => {
+  return jobs;
+};
 
-async function addJob(title, company, technologies, jobLink, date) {
+async function addJob(title, company, technologies, job_link, date) {
   if (jobs) {
-    const job = { title, company, technologies, jobLink, date };
+    const job = { title, company, technologies, job_link, date };
     jobs.push(job);
   }
 }
@@ -68,9 +52,9 @@ async function latestJobs(page) {
 
       //LINK=============================
       const jobLinkElement = await card.$('.job-card-header a');
-      let jobLink = '';
+      let job_link = '';
       if (jobLinkElement) {
-        jobLink = await getPropertyValue(jobLinkElement, 'href');
+        job_link = await getPropertyValue(jobLinkElement, 'href');
       }
 
       //COMPANY==========================
@@ -92,7 +76,7 @@ async function latestJobs(page) {
       }
       //VALIDATES JOB ACCORDING FILTER=========================
       if (technologies.some((item) => techFilter.includes(item))) {
-        await addJob(jobTitle, company, technologies, jobLink, date);
+        await addJob(jobTitle, company, technologies, job_link, date);
       }
     }
   });
