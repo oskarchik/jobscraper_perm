@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const { remoteJobsCron } = require('./cronJob/index');
 const apiRoutes = require('./routes/api.js');
 
-const BASE_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000';
+const BASE_URL = process.env.NODE_ENV === 'production' ? process.env.FRONT_URL : 'http://localhost:3000';
 
 const app = express();
 

@@ -2,6 +2,8 @@ const { Op, where } = require('sequelize');
 const { v4: uuidv4, v4 } = require('uuid');
 const { Job } = require('../db');
 
+const BASE_URL = process.env.NODE_ENV === 'production' ? '/api/jobs' : 'http://localhost:8000/api/jobs';
+
 const latestJobs = async (req, res, next) => {
   const page = parseInt(req.query.page) | 0;
   const limit = 10;
@@ -29,17 +31,18 @@ const latestJobs = async (req, res, next) => {
     if (startIndex >= 0 && startIndex < jobs.count) {
       results.info.previous = {
         page: page - 1,
-        link: `http://localhost:8000/api/jobs/latestjobs?page=${page - 1}`,
+        link: `${BASE_URL}/latestjobs?page=${page - 1}`,
       };
     }
     if (endIndex + 10 < jobs.count) {
       results.info.next = {
         page: page + 1,
-        link: `http://localhost:8000/api/jobs/latestjobs?page=${page + 1}`,
+        link: `${BASE_URL}/latestjobs?page=${page + 1}`,
       };
     }
     if (jobs.rows.length) {
       results.results = { jobs };
+
       return res.json(results);
     } else {
       return res.send({ msg: 'No jobs published yesterday sorry' });
@@ -67,15 +70,16 @@ const allJobs = async (req, res, next) => {
   if (startIndex >= 0 && startIndex < jobs.count) {
     results.info.previous = {
       page: page - 1,
-      link: `http://localhost:8000/api/jobs/alljobs?page=${page - 1}`,
+      link: `${BASE_URL}/alljobs?page=${page - 1}`,
     };
   }
   if (endIndex + 10 < jobs.count) {
     results.info.next = {
       page: page + 1,
-      link: `http://localhost:8000/api/jobs/alljobs?page=${page + 1}`,
+      link: `${BASE_URL}/alljobs?page=${page + 1}`,
     };
   }
+  console.log(results.info);
   results.results = {
     jobs,
   };
@@ -170,13 +174,13 @@ const searchJob = async (req, res, next) => {
     if (startIndex >= 0 && startIndex < jobs.count) {
       results.info.previous = {
         page: page - 1,
-        link: `http://localhost:8000/api/jobs/filter/:field/:word?page=${page - 1}`,
+        link: `${BASE_URL}/filter/:field/:word?page=${page - 1}`,
       };
     }
     if (endIndex + 10 < jobs.count) {
       results.info.next = {
         page: page + 1,
-        link: `http://localhost:8000/api/jobs/filter/:field/:word?page=${page + 1}`,
+        link: `${BASE_URL}/filter/:field/:word?page=${page + 1}`,
       };
     }
     results.results = {
