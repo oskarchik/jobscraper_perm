@@ -9,8 +9,9 @@ async function fetchJobs() {
   try {
     console.log('fetching jobs');
     await jobScraper();
-    const newJobs = await getJobs();
-    saveJobs(newJobs);
+    const newJobs = getJobs();
+    await saveJobs(newJobs);
+
     return newJobs;
   } catch (error) {
     console.log(error);
@@ -19,9 +20,11 @@ async function fetchJobs() {
 
 const saveJobs = async (jobs) => {
   try {
-    return await jobs.map(async (job) => {
-      await Job.create({ ...job, id: v4() }, { ignoreDuplicates: true });
-    });
+    return await Promise.all(
+      jobs.map(async (job) => {
+        return await Job.create({ ...job, id: v4() }, { ignoreDuplicates: true });
+      })
+    );
   } catch (error) {
     console.log(error);
   }
