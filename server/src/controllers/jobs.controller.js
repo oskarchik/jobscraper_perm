@@ -79,7 +79,7 @@ const allJobs = async (req, res, next) => {
       link: `${BASE_URL}/alljobs?page=${page + 1}`,
     };
   }
-  console.log(results.info);
+
   results.results = {
     jobs,
   };
