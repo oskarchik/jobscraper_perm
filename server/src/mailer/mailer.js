@@ -26,14 +26,16 @@ const latestJobs = async (email, password) => {
       },
       withCredentials: true,
     });
-
-    if (responseLatestJobs.data.msg) sendMail(responseLatestJobs.data.msg);
+    if (responseLatestJobs.data.msg) {
+      sendMail(responseLatestJobs?.data?.msg);
+    }
+    sendMail(displayTable(responseLatestJobs?.data?.results?.jobs?.rows));
   } catch (error) {
     console.log(error);
   }
 };
 
-const displayTable = async (jobs) => {
+const displayTable = (jobs) => {
   let table = `<h1>These are the job collected today from your database!!!</h1>
   <table style="width: 100%;
                 max-width: 100%;
@@ -104,6 +106,8 @@ const displayTable = async (jobs) => {
     table += `</tr>`;
   });
   table += `</tbody></table>`;
+
+  table += `<p style="text-align: center; margin: 0 auto; font-size:20px">Check all the jobs in <a href='jobfindr.tk'>JobFindr</a></p>`;
 
   return table;
 };
