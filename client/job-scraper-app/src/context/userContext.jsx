@@ -33,7 +33,7 @@ export const UserProvider = ({ children }) => {
     console.log('out');
     setUser(null);
     try {
-      const response = await axios.get('logout', {
+      const response = await axios.get('/api/auth/logout', {
         withCredentials: true,
       });
     } catch (error) {}
