@@ -30,7 +30,6 @@ export const UserProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    console.log('out');
     setUser(null);
     try {
       const response = await axios.get('/api/auth/logout', {
