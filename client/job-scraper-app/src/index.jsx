@@ -2,11 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './context/userContext';
 import { JobsProvider } from './context/jobsContext';
 import { ThemeProvider } from './context/themeContext';
+
+if (process.env.NODE_ENV === 'production') {
+  disableReactDevTools();
+}
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
