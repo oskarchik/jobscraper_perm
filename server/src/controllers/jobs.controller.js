@@ -21,7 +21,7 @@ const latestJobs = async (req, res, next) => {
           [Op.gt]: lastDay,
         },
       },
-      order: [['date', 'DESC']],
+      order: [['createdAt', 'DESC']],
       limit: limit,
       offset: page * limit,
     });
@@ -60,7 +60,7 @@ const allJobs = async (req, res, next) => {
   const endIndex = page * limit;
 
   const jobs = await Job.findAndCountAll({
-    order: [['date', 'DESC']],
+    order: [['createdAt', 'DESC']],
     limit: limit,
     offset: page * limit,
   });
