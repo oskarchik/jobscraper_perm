@@ -1,11 +1,14 @@
 const axios = require('axios').default;
 const { techFilter } = require('../utils/techFilter');
 const { sendMail } = require('./nodemailer');
+const { FRONT_URL } = process.env;
 
 const BASE_URL_LOGIN =
-  process.env.NODE_ENV === 'production' ? '/api/auth/login' : 'http://localhost:8000/api/auth/login';
+  process.env.NODE_ENV === 'production' ? `${FRONT_URL}}/api/auth/login` : 'http://localhost:8000/api/auth/login';
 const BASE_URL_JOBS =
-  process.env.NODE_ENV === 'production' ? '/api/jobs/latestsjobs' : 'http://localhost:8000/api/jobs/latestsjobs';
+  process.env.NODE_ENV === 'production'
+    ? `${FRONT_URL}/api/jobs/latestsjobs`
+    : 'http://localhost:8000/api/jobs/latestsjobs';
 
 const latestJobs = async (email, password) => {
   try {
@@ -68,7 +71,7 @@ const displayTable = (jobs) => {
       </tr>
     </thead>
     <tbody>`;
-  jobs.forEach((job, i) => {
+  jobs?.forEach((job, i) => {
     const techs = job.technologies.filter((item) => techFilter.includes(item));
     if (i % 2 === 0) {
       table += `<tr style="background-color:#f5f5f5;">`;
