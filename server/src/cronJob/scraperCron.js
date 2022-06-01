@@ -5,7 +5,7 @@ const { Job } = require('../db');
 const { jobScraper, getJobs } = require('../jobscraper/scraper');
 
 console.log('starting');
-async function fetchJobs() {
+const fetchJobs = async () => {
   try {
     console.log('fetching jobs');
     await jobScraper();
@@ -16,7 +16,7 @@ async function fetchJobs() {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 const saveJobs = async (jobs) => {
   try {
