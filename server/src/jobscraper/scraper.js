@@ -4,15 +4,19 @@ const { techFilter } = require('../utils/techFilter');
 const jobs = [];
 
 const jobScraper = async () => {
-  const browser = await puppeteer.launch({ headless: true });
+  try {
+    const browser = await puppeteer.launch({ headless: true });
 
-  const page = await browser.newPage();
+    const page = await browser.newPage();
 
-  await page.goto('https://ticjob.es/esp/busqueda', { timeout: 0 });
+    await page.goto('https://ticjob.es/esp/busqueda', { timeout: 0 });
 
-  await latestJobs(page);
+    await latestJobs(page);
 
-  await page.close();
+    await page.close();
+  } catch (error) {
+    console.log('error in jobScraper function:', error);
+  }
 };
 
 const getJobs = () => {
@@ -27,7 +31,6 @@ async function addJob(title, company, technologies, job_link, date) {
 }
 
 async function getPropertyValue(element, propertyName) {
-  debugger;
   const property = await element.getProperty(propertyName);
   return await property.jsonValue();
 }
