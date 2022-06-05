@@ -31,8 +31,9 @@ const latestJobs = async (email, password) => {
     });
     if (responseLatestJobs.data.msg) {
       sendMail(responseLatestJobs?.data?.msg);
+    } else {
+      sendMail(displayTable(responseLatestJobs?.data?.results?.jobs?.rows));
     }
-    sendMail(displayTable(responseLatestJobs?.data?.results?.jobs?.rows));
   } catch (error) {
     console.log(error);
   }
