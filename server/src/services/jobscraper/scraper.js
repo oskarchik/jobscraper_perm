@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const { techFilter } = require('../utils/techFilter');
+const { techFilter } = require('../../utils/techFilter');
 
 const jobs = [];
 

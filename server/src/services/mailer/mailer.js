@@ -1,5 +1,5 @@
 const axios = require('axios').default;
-const { techFilter } = require('../utils/techFilter');
+const { techFilter } = require('../../utils/techFilter');
 const { sendMail } = require('./nodemailer');
 const { FRONT_URL } = process.env;
 

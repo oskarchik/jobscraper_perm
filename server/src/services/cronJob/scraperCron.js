@@ -1,6 +1,6 @@
 const { CronJob } = require('cron');
 const { v4: uuidv4, v4 } = require('uuid');
-const { Job } = require('../db');
+const { Job } = require('../../db');
 
 const { jobScraper, getJobs } = require('../jobscraper/scraper');
 
