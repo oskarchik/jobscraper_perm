@@ -1,5 +1,3 @@
-import { ThemeProvider } from 'styled-components';
-
 export const colors = {
   primaryColor: '#f5f5f5',
   secondaryColor: '#111827',

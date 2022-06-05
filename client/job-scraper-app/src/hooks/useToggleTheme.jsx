@@ -1,5 +1,3 @@
-import { useState, useContext, useEffect } from 'react';
-
 import { useTheme } from './index';
 
 export const useToggleTheme = () => {

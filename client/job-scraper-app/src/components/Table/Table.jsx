@@ -84,7 +84,7 @@ const Table = () => {
 
   useEffect(() => {
     getJobs(url, location);
-  }, [url]);
+  }, [url, location]);
   return (
     <>
       {noJobsMsg ? (

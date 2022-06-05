@@ -1,7 +1,7 @@
 import { createContext, useReducer, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { axiosPrivate } from '../api/axios';
-import { useAuth, useAxiosPrivate } from '../hooks';
+import { useAuth } from '../hooks';
 
 import { jobReducer, initialState } from '../reducers/jobsReducer';
 
@@ -18,7 +18,6 @@ const ACTIONS = {
 
 export const JobsProvider = ({ children }) => {
   const { user } = useAuth();
-  // const { axiosPrivate } = useAxiosPrivate();
   const [state, dispatch] = useReducer(jobReducer, initialState);
 
   const getJobs = async (url, location) => {
@@ -91,7 +90,7 @@ export const JobsProvider = ({ children }) => {
   const deleteJobs = async (jobs) => {
     const controller = new AbortController();
     try {
-      const response = await axiosPrivate.delete(`/api/jobs/`, {
+      await axiosPrivate.delete(`/api/jobs/`, {
         data: { jobs },
         signal: controller.signal,
         headers: {
@@ -104,9 +103,6 @@ export const JobsProvider = ({ children }) => {
       console.log(error);
     }
   };
-
-  const [jobs, setJobs] = useState(null);
-  const [info, setInfo] = useState(null);
 
   const value = {
     getJobs,

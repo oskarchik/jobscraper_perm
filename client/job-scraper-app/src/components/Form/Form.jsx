@@ -4,16 +4,13 @@ import { useNavigate } from 'react-router';
 import { StyledForm } from './Form.styled';
 
 import { useAuth } from '../../hooks/index';
-// import { useLogIn } from '../../hooks/useLogIn';
-import Button from '../Button/Button';
+
 import Input from '../Input/Input';
 
 const Form = () => {
   const [input, setInput] = useState({ email: '', password: '' });
   const navigate = useNavigate();
   const { login } = useAuth();
-
-  // const login = useLogIn();
 
   const onInputChange = (e) => {
     const value = e.target.value;
