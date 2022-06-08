@@ -21,13 +21,14 @@ Built with the PERN stack(PostgreSQL, Express, React and NodeJS)
 
 
 -  [Introduction](#Introduction)
--  [Key Features](#Features)
+-  [Screenshots](#Screenshots)
+-  [Key Features](#Key_Features)
    -  [Client](#Client)
    -  [Server](#Server)
    -  [Database](#Database)
--  [Configuration and Setup](#Configuration)
--  Author
--  Licence
+-  [Project Status](#Project_Status)
+-  [Author](#Author)
+
 ## Introduction
 
 This is a side project I've been working on. A full stack web scraper made using the **PERN** stack that helps me finding a job in tech industry.
