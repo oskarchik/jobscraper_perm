@@ -1,6 +1,6 @@
 const { Op, where } = require('sequelize');
 const { v4: uuidv4, v4 } = require('uuid');
-const { Job } = require('../db');
+const { Job, Token } = require('../db');
 
 const BASE_URL = process.env.NODE_ENV === 'production' ? '/api/jobs' : 'http://localhost:8000/api/jobs';
 
@@ -119,19 +119,24 @@ const updateJob = async (req, res, next) => {
 
 const deleteJob = async (req, res, next) => {
   const id = req.body.jobs;
+  const { token } = req.cookies;
 
-  if (!id) return res.status(422).json({ message: 'id parameter required' }); //length should be bigger than 2 in case of empty array
+  if (!id) return res.status(422).json({ msg: 'id parameter required' }); //length should be bigger than 2 in case of empty array
 
   try {
+    const savedToken = await Token.findOne({ where: { token } });
+    if (savedToken.user_id !== process.env.ADMIN_USER) {
+      return res.status(403).json({ msg: 'Sorry, you are not allowed to delete jobs' });
+    }
     const existingJob = await Job.findAll({ where: { id } });
     if (existingJob.length === 0) {
-      return res.status(404), json({ message: 'job not found' });
+      return res.status(404).json({ msg: 'job not found' });
     }
 
     await Job.destroy({
       where: { id },
     });
-    return res.json({ message: 'job deleted' });
+    return res.json({ msg: 'job deleted' });
   } catch (error) {
     console.log(error);
   }
