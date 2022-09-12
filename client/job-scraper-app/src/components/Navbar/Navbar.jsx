@@ -27,9 +27,9 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li className='menu-item'>
-            <p onClick={signOut} className='link'>
+            <NavLink to='#' onClick={signOut} className='link'>
               LOGOUT
-            </p>
+            </NavLink>
           </li>
         </ul>
       )}
