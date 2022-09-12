@@ -1,7 +1,7 @@
 import { createContext, useReducer, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { axiosPrivate } from '../api/axios';
-import { useAuth } from '../hooks';
+import { useAuth, useToast } from '../hooks';
 
 import { jobReducer, initialState } from '../reducers/jobsReducer';
 
@@ -18,6 +18,7 @@ const ACTIONS = {
 
 export const JobsProvider = ({ children }) => {
   const { user } = useAuth();
+  const { setNotification } = useToast();
   const [state, dispatch] = useReducer(jobReducer, initialState);
 
   const getJobs = async (url, location) => {
@@ -97,10 +98,12 @@ export const JobsProvider = ({ children }) => {
           Authorization: `Bearer ${user?.accessToken}`,
         },
       });
+
       controller.abort();
+
       return dispatch({ type: ACTIONS.DELETE_JOB, payload: jobs });
     } catch (error) {
-      console.log(error);
+      setNotification(error);
     }
   };
 

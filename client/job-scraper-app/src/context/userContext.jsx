@@ -1,6 +1,7 @@
 import { createContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
+import { useToast } from '../hooks';
 
 const UserContext = createContext();
 
@@ -8,6 +9,7 @@ export const UserProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const { setNotification } = useToast();
 
   const login = async (email, password) => {
     try {
@@ -25,7 +27,7 @@ export const UserProvider = ({ children }) => {
         navigate('/');
       }
     } catch (error) {
-      console.log(error);
+      setNotification(error);
     }
   };
 
@@ -35,7 +37,9 @@ export const UserProvider = ({ children }) => {
       await axios.get('/api/auth/logout', {
         withCredentials: true,
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const value = {
