@@ -34,19 +34,17 @@ const register = async (req, res) => {
 const logIn = async (req, res, next) => {
   const cookies = req.cookies;
   const refreshToken = cookies?.token;
-
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(422).json({ msg: 'all fields are required, please try again' });
   }
   try {
     const user = await User.findOne({ where: { email }, raw: true });
-
     if (!user) {
-      return res.status(403).json({ msg: 'wrong credentials, please try again' });
+      return res.status(403).json({ msg: 'Wrong credentials, please try again' });
     }
-    const isValidPassword = await bcrypt.compare(password, user.password);
 
+    const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
       return res.status(403).json({ msg: 'wrong credentials, please try again' });
     }
@@ -136,6 +134,7 @@ const newAccessToken = async (req, res, next) => {
         attributes: ['t_id'],
         raw: true,
       });
+
       if (hackedTokens) {
         const result = await Token.destroy({
           where: {
