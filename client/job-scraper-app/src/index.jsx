@@ -5,9 +5,7 @@ import './index.css';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { UserProvider } from './context/userContext';
-import { JobsProvider } from './context/jobsContext';
-import { ThemeProvider } from './context/themeContext';
+import { AppContextProvider } from './context';
 
 if (process.env.NODE_ENV === 'production') {
   disableReactDevTools();
@@ -15,13 +13,9 @@ if (process.env.NODE_ENV === 'production') {
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider>
-        <UserProvider>
-          <JobsProvider>
-            <App />
-          </JobsProvider>
-        </UserProvider>
-      </ThemeProvider>
+      <AppContextProvider>
+        <App />
+      </AppContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

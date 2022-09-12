@@ -7,4 +7,5 @@ import SecureRoute from './SecureRoute/SecureRoute';
 import Table from './Table/Table';
 import ToggleButton from './ToggleButton/ToggleButton';
 import SearchBar from './SearchBar/SearchBar';
-export { Button, Form, Header, Navbar, PersistLogin, SecureRoute, Table, ToggleButton, SearchBar };
+import Toast from './Toast/Toast';
+export { Button, Form, Header, Navbar, PersistLogin, SecureRoute, Table, ToggleButton, SearchBar, Toast };
