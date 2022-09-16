@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledToggleButton = styled.label`
-  padding-left: 10px;
+  padding-left: 20px;
   input[type='checkbox'] {
     -webkit-appearance: none;
     visibility: hidden;

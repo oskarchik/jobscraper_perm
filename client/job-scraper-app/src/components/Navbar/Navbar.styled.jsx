@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledNavbar = styled.nav`
-  padding: 10px;
+  padding-right: 20px;
   .menu {
     list-style: none;
     margin-right: 10px;
