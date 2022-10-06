@@ -4,7 +4,7 @@ const { sendMail } = require('./nodemailer');
 const { FRONT_URL } = process.env;
 
 const BASE_URL_LOGIN =
-  process.env.NODE_ENV === 'production' ? `${FRONT_URL}}/api/auth/login` : 'http://localhost:8000/api/auth/login';
+  process.env.NODE_ENV === 'production' ? `${FRONT_URL}/api/auth/login` : 'http://localhost:8000/api/auth/login';
 const BASE_URL_JOBS =
   process.env.NODE_ENV === 'production'
     ? `${FRONT_URL}/api/jobs/latestsjobs`
