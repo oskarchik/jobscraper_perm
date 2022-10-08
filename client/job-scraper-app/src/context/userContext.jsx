@@ -8,7 +8,7 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
   const { setNotification } = useToast();
 
   const login = async (email, password) => {
@@ -22,9 +22,9 @@ export const UserProvider = ({ children }) => {
         { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
       );
       if (response.data.accessToken.length) {
-        setToken(response.data.accessToken);
+        setAccessToken(response.data.accessToken);
         setUser(response.data.user);
-        navigate('/');
+        navigate('/', { replace: true });
       }
     } catch (error) {
       setNotification(error);
@@ -45,8 +45,8 @@ export const UserProvider = ({ children }) => {
   const value = {
     user,
     setUser,
-    token,
-    setToken,
+    accessToken,
+    setAccessToken,
     login,
     logout,
   };
