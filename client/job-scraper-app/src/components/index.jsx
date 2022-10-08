@@ -2,7 +2,7 @@ import Button from './Button/Button';
 import Form from './Form/Form';
 import Header from './Header/Header';
 import Navbar from './Navbar/Navbar';
-import PersistLogin from './PersistLogin/PersistLongin';
+import PersistLogin from './PersistLogin/PersistLogin';
 import SecureRoute from './SecureRoute/SecureRoute';
 import Table from './Table/Table';
 import ToggleButton from './ToggleButton/ToggleButton';
